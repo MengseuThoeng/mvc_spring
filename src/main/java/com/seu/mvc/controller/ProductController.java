@@ -1,5 +1,6 @@
 package com.seu.mvc.controller;
 import com.seu.mvc.dto.ProductCreateRequest;
+import com.seu.mvc.dto.ProductEditRequest;
 import com.seu.mvc.dto.ProductResponse;
 import com.seu.mvc.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,10 @@ public class ProductController {
     void createNewProduct(@RequestBody ProductCreateRequest request){
         productService.createNewProduct(request);
     }
-
+    @PutMapping("/{uuid}")
+    void editProductByUuid(@PathVariable String uuid, @RequestBody ProductEditRequest request){
+        productService.editProductByUuid(request,uuid);
+    }
     @GetMapping
     Map<String,Object> findProducts(){
         return Map.of(

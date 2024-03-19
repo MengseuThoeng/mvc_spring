@@ -1,6 +1,7 @@
 package com.seu.mvc.service.impl;
 
 import com.seu.mvc.dto.ProductCreateRequest;
+import com.seu.mvc.dto.ProductEditRequest;
 import com.seu.mvc.dto.ProductResponse;
 import com.seu.mvc.model.Product;
 import com.seu.mvc.service.ProductService;
@@ -48,6 +49,18 @@ public class ProductServiceImpl implements ProductService {
         newProduct.setImportedDate(LocalDateTime.now());
         newProduct.setStatus(true);
         products.add(newProduct);
+    }
+
+    @Override
+    public void editProductByUuid(ProductEditRequest request, String uuid) {
+        //Check UUID Exists
+        long count=products.stream()
+                .filter(product -> product.getUuid().equals(uuid))
+                .peek(oldProduct -> {
+                    oldProduct.setName(request.name());
+                    oldProduct.setPrice(request.price());
+                }).count();
+        System.out.println("Affected Row= "+count);
     }
 
     @Override
