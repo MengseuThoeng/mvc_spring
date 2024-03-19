@@ -25,11 +25,14 @@ public class ProductController {
         productService.editProductByUuid(request,uuid);
     }
     @GetMapping
-    Map<String,Object> findProducts(){
+    Map<String, Object> findProducts(@RequestParam(required = false, defaultValue = "") String name,
+                                     @RequestParam(required = false, defaultValue = "true") Boolean status) {
         return Map.of(
-                "date",productService.findProducts()
+                "message", "Products have been found",
+                "data", productService.findProducts(name, status)
         );
     }
+
     @GetMapping("/{id}")
     Map<String,Object> findProductById(@PathVariable Integer id){
         return Map.of(

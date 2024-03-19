@@ -64,10 +64,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponse> findProducts() {
-        return products
-                .stream()
-                .filter(Product::getStatus)
+    public List<ProductResponse> findProducts(String name, Boolean status) {
+        return products.stream()
+                .filter(product -> product.getName().toLowerCase()
+                        .contains(name.toLowerCase()) && product.getStatus().equals(status))
                 .map(product -> new ProductResponse(
                         product.getUuid(),
                         product.getName(),
@@ -77,24 +77,11 @@ public class ProductServiceImpl implements ProductService {
                 .toList();
     }
 
+
     @Override
     public ProductResponse findProductById(Integer id) {
         return products.stream()
                 .filter(product -> product.getStatus() && product.getId().equals(id))
-                .map(product -> new ProductResponse(
-                        product.getUuid(),
-                        product.getName(),
-                        product.getPrice(),
-                        product.getQty()
-                ))
-                .findFirst()
-                .orElse(null);
-    }
-
-    @Override
-    public ProductResponse findProductByName(String name) {
-        return products.stream()
-                .filter(product -> product.getStatus() && product.getName().contains(name))
                 .map(product -> new ProductResponse(
                         product.getUuid(),
                         product.getName(),

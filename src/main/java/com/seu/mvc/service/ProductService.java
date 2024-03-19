@@ -7,9 +7,8 @@ import com.seu.mvc.dto.ProductResponse;
 import java.util.List;
 
 public interface ProductService {
-    List<ProductResponse> findProducts();
+    List<ProductResponse> findProducts(String name, Boolean status);
     ProductResponse findProductById (Integer id);
-    ProductResponse findProductByName (String name);
     void createNewProduct(ProductCreateRequest productCreateRequest);
     void editProductByUuid(ProductEditRequest request,String uuid);
 }
