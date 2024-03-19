@@ -64,6 +64,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void deleteProductByUuid(String uuid) {
+        products.removeIf(p -> p.getUuid().equals(uuid));
+    }
+
+    @Override
     public List<ProductResponse> findProducts(String name, Boolean status) {
         return products.stream()
                 .filter(product -> product.getName().toLowerCase()

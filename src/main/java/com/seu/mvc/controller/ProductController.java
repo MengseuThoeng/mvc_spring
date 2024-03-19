@@ -15,16 +15,22 @@ import java.util.Map;
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping
+    @PostMapping//Create
     @ResponseStatus(HttpStatus.CREATED)
     void createNewProduct(@RequestBody ProductCreateRequest request){
         productService.createNewProduct(request);
     }
-    @PutMapping("/{uuid}")
+
+    @DeleteMapping("/{uuid}")//Delete
+    void deleteByUuid(@PathVariable String uuid){
+        productService.deleteProductByUuid(uuid);
+    }
+
+    @PutMapping("/{uuid}")//Update
     void editProductByUuid(@PathVariable String uuid, @RequestBody ProductEditRequest request){
         productService.editProductByUuid(request,uuid);
     }
-    @GetMapping
+    @GetMapping//Find Product
     Map<String, Object> findProducts(@RequestParam(required = false, defaultValue = "") String name,
                                      @RequestParam(required = false, defaultValue = "true") Boolean status) {
         return Map.of(
@@ -33,7 +39,7 @@ public class ProductController {
         );
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}")//Find by ID
     Map<String,Object> findProductById(@PathVariable Integer id){
         return Map.of(
                 "data",productService.findProductById(id)
