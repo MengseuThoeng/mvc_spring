@@ -4,6 +4,7 @@ import com.seu.mvc.dto.ProductEditRequest;
 import com.seu.mvc.dto.ProductResponse;
 import com.seu.mvc.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
+@Slf4j
 public class ProductController {
     private final ProductService productService;
 
@@ -42,6 +44,7 @@ public class ProductController {
 
     @GetMapping("/{id}")//Find by ID
     Map<String,Object> findProductById(@PathVariable Integer id){
+        log.info("Hello World...!");
         return Map.of(
                 "data",productService.findProductById(id)
         );
