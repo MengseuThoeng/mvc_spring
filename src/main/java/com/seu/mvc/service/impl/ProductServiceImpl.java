@@ -67,6 +67,12 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProductByUuid(String uuid) {
         products.removeIf(p -> p.getUuid().equals(uuid));
     }
+//        for (Product p:products){
+//            if (p.getUuid().equals(uuid)){
+//                products.remove(p);
+//            }
+//        }
+
 
     @Override
     public List<ProductResponse> findProducts(String name, Boolean status) {

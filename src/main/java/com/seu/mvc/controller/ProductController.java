@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/product")
+@RequestMapping("/api/v1/products")
 public class ProductController {
     private final ProductService productService;
 
@@ -21,6 +21,7 @@ public class ProductController {
         productService.createNewProduct(request);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{uuid}")//Delete
     void deleteByUuid(@PathVariable String uuid){
         productService.deleteProductByUuid(uuid);
