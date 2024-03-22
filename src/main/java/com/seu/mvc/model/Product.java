@@ -24,6 +24,6 @@ public class Product {
     private LocalDateTime importedDate;
     private Boolean status;
 
-    @ManyToOne
-    private Category category;
+//    @ManyToOne
+//    private Category category;
 }

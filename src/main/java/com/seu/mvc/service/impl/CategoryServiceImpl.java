@@ -6,6 +6,7 @@ import com.seu.mvc.model.Category;
 import com.seu.mvc.repository.CategoryRepository;
 import com.seu.mvc.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
@@ -44,17 +45,43 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void createCategory(CategoryRequest categoryRequest) {
+        if (categoryRepository.existsByName(categoryRequest.name())){
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Category name already existed in our system!!"
+            );
+        }
 
+        Category category = new Category();
+        category.setName(categoryRequest.name());
+        category.setDescription(categoryRequest.description());
+        categoryRepository.save(category);
     }
 
     @Override
     public CategoryResponse editCategoryById(Integer id, CategoryRequest request) {
-        return null;
+        // Load old data
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(()->new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Category don't found!"
+                ));
+        category.setName(request.name());
+        category.setDescription(request.description());
+        categoryRepository.save(category);
+        //Kjey logic
+        return this.findCategoryById(id);
     }
 
     @Override
     public void deleteCategoryById(Integer id) {
-
+        if (!categoryRepository.existsById(id)){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Category don't found!!"
+            );
+        }
+        categoryRepository.deleteById(id);
     }
 
 }

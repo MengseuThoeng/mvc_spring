@@ -1,5 +1,6 @@
 package com.seu.mvc.controller;
 
+import com.seu.mvc.dto.CategoryRequest;
 import com.seu.mvc.dto.CategoryResponse;
 import com.seu.mvc.model.Product;
 import com.seu.mvc.repository.CategoryRepository;
@@ -9,7 +10,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -24,6 +27,21 @@ public class CategoryController {
     @GetMapping("/{id}")
     CategoryResponse findCategoryById(@PathVariable Integer id){
         return categoryService.findCategoryById(id);
+    }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    void createNewCategory (@Valid @RequestBody CategoryRequest request){
+        categoryService.createCategory(request);
+    }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    void deleteCategoryById(@PathVariable Integer id){
+        categoryService.deleteCategoryById(id);
+    }
+
+    @PutMapping("/{id}")
+    CategoryResponse editCategoryById(@PathVariable Integer id ,@Valid @RequestBody CategoryRequest request){
+        return categoryService.editCategoryById(id,request);
     }
 //Customize Swagger
     @Operation(summary = "Get All Categories")
