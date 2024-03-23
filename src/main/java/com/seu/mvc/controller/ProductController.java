@@ -45,10 +45,17 @@ public class ProductController {
 
 
     @PutMapping("/{uuid}")
-//Update
-    void editProductByUuid(@PathVariable String uuid, @RequestBody ProductEditRequest request) {
-        productService.editProductByUuid(request, uuid);
+    ProductResponse editProductByUuid(@PathVariable String uuid, @Valid @RequestBody ProductEditRequest request ){
+        return productService.editProductByUuid(uuid,request);
     }
+    @GetMapping("/uuid/{uuid}")
+    ProductResponse findProductByUuid(@PathVariable String uuid){
+        return productService.findProductByUuid(uuid);
+    }
+//Update
+//    void editProductByUuid(@PathVariable String uuid, @RequestBody ProductEditRequest request) {
+//        productService.editProductByUuid(request, uuid);
+//    }
 
     @GetMapping
 //Find Product

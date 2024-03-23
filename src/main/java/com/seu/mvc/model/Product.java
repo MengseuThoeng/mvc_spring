@@ -16,8 +16,10 @@ import java.time.LocalDateTime;
 @Table(name = "products")
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String uuid;
+    @Column(unique = true)
     private String name;
     private Double price;
     private Integer qty;
