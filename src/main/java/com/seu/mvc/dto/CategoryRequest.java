@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 
 public record CategoryRequest(
         @NotBlank
-        @Size
+        @Size(max = 20)
         String name,
         String description
 ) {
